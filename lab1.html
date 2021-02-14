@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>Lab1</title>
+</head>
+<body>
+
+<form name="forma" method="post" action="javascript:;" onsubmit="rasch()">
+Ввод данных: четная цифра, нечетная цифра, две любые цифры.<br>
+Множество А <input type = 'text' id = 'mass1' name = ''><br>
+Множество B <input type = 'text' id = 'mass2' name = ''><br>
+<input type="submit" value='рассчитать'><br>
+</form>
+Объединение множеств:<span id = "union"></span><br>
+Пересечение множеств:<span id = "intersection"></span><br>
+Дополнение множеств:<span id = "complement"></span><br>
+Симметрическая разность множеств:<span id = "symdiff"></span><br>
+</body>
+<script>
+function rasch() {
+  mass1 = document.getElementById('mass1').value;
+  var arr1 = mass1.split(' ');
+  mass2 = document.getElementById('mass2').value;
+  var arr2 = mass2.split(' ');  
+  var A = document.getElementById('mass1').value;
+  var B = document.getElementById('mass2').value;
+  var flag1 = 0;
+  var flag2 = 0;
+  
+	if ((A == '') || (B == '')) {
+		alert("необходимо ввести данные");
+		return;
+    }
+	for(var i = 0; i < arr1.length; i++) {
+		if(arr1[i].length == 4){
+			flag1++;
+		}
+		if(Number(arr1[i][0]) % 2 == 0) {
+			flag1++;
+		}
+		if(Number(arr1[i][1]) % 2 != 0) {
+			flag1++;
+		}
+		if((Number(arr1[i][2]) && Number(arr1[i][3]) >= 0) && (Number(arr1[i][2]) && Number(arr1[i][3]) < 10)){
+			flag1++;
+		}
+		if(flag1 == 4){
+			flag1 = 0
+		}
+		else{
+			alert("Введены неверные данные в первой строке!");
+			exit(-1);
+		}
+	}
+	
+	for(var i = 0; i < arr2.length; i++) {
+		if(arr2[i].length == 4){
+			flag2++;
+		}
+		if(Number(arr2[i][0]) % 2 == 0) {
+			flag2++;
+		}
+		if(Number(arr2[i][1]) % 2 != 0) {
+			flag2++;
+		}
+		if((Number(arr2[i][2]) && Number(arr2[i][3]) >= 0) && (Number(arr2[i][2]) && Number(arr2[i][3]) < 10)){
+			flag2++;
+		}
+		if(flag2 == 4){
+			flag2 = 0
+		}
+		else{
+			alert("Введены неверные данные во второй строке!");
+			exit(-1);
+		}
+	}
+	union();
+	intersection();
+	complement();
+	symdiff();
+}
+function union() {
+let mass1 = document.getElementById("mass1").value;
+let mass2 = document.getElementById("mass2").value;
+let arr1 = mass1.split(' ');
+let arr2 = mass2.split(' ');
+var unionResult = mass1;
+	for(var i = 0; i < arr2.length; i++){
+		if(arr1.indexOf(arr2[i]) == -1){
+			unionResult = unionResult+' '+arr2[i];
+		}	
+	}
+document.getElementById("union").innerHTML = unionResult;
+}
+function intersection() {
+let mass1 = document.getElementById("mass1").value;
+let mass2 = document.getElementById("mass2").value;
+let arr1 = mass1.split(' ');
+let arr2 = mass2.split(' ');
+let interResult = [];
+	for(var i = 0; i < arr1.length; i++){
+		for(var j = 0; j < arr2.length; j++){
+			if(arr1[i] == arr2[j]) {
+				interResult = interResult + ' ' + arr1[i];
+			}
+		}
+	}
+document.getElementById("intersection").innerHTML = interResult;
+}
+function complement() {
+let mass1 = document.getElementById("mass1").value;
+let mass2 = document.getElementById("mass2").value;
+let arr1 = mass1.split(' ');
+let arr2 = mass2.split(' ');
+let complResult = [];
+	for(var i = 0; i < arr1.length; i++){
+		if(arr2.indexOf(arr1[i]) == -1) {
+			complResult = complResult+' '+arr1[i];
+		}
+	}
+document.getElementById("complement").innerHTML = complResult;
+}
+function symdiff() {
+let mass1 = document.getElementById("mass1").value;
+let mass2 = document.getElementById("mass2").value;
+let arr1 = mass1.split(' ');
+let arr2 = mass2.split(' ');
+let symResult = [];
+let a = 0;
+	for(var i = 0; i < arr1.length; i++){
+		a=0;
+		for(var j = 0; j < arr2.length; j++){
+			if(arr1[i] == arr2[j]) {
+				a = 1;
+			}
+		}
+		if(a == 0){
+			symResult = symResult+' '+arr1[i];
+		}
+	}
+	for(var i = 0; i < arr2.length; i++){
+		a=0;
+		for(var j = 0; j < arr1.length; j++){
+			if(arr2[i] == arr1[j]) {
+				a = 1;
+			}
+		}
+		if(a == 0){
+		symResult = symResult+' '+arr2[i];
+		}
+	}
+document.getElementById("symdiff").innerHTML = symResult;
+}
+</script>
+</html>
