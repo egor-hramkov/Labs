@@ -124,14 +124,12 @@ function CosSymmetr(){ //функция на определение кососи
 function Transition(){ //функция на определение транзитивности
     if (mainMass.length == 3) {
     let mass1; //
-    let mass2; // Хранят 1, 2 и 3 пару элементов соответственно
-    let mass3; //
+ 
     let flag;
     flag = 0;
     
     mass1 = mainMass[0].split(" "); // получает 1 пару элементов
-    mass2 = mainMass[1].split(" "); //получает  2 пару элементов
-    mass3 = mainMass[2].split(" "); //получает 3 пару элементов
+    
     if(mass1[1] == mass2[0] && mass1[0] == mass3[0] && mass2[1] == mass3[1]) //проверяет позиции элементов в парах и между парами
         flag++;
     if(flag>0)
