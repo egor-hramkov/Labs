@@ -69,19 +69,28 @@ function Validation(){ //Функция валидации данных
 function Reflection(){ //Функция для определения свойства Рефлексивность
     let mass1; //Массив для попарной записи элементов
     let flag;
-    for(let i = 0; i < mainMass.length; i++){ // цикл по всей строке пар элементов
-        mass1 = mainMass[i].split(" "); // запись Попарно
-        flag = 0; //Обнуление флага при переходе к следующей паре элементов
-        for(let k = 0; k < rMass.length; k+=2){ //Проверка элементов из пар между массивами
-            if(mass1[0] == rMass[k]) 
-            {
-                flag ++;
-            }
-            if(flag == mainMass.length) {
-                document.getElementById("reflection").innerHTML = "Рефлексивность";
-                mainflag = 1;
-            }
-        }   
+    if(mainMass.length == 1) {
+        mass1 = mainMass[0].split(" ");
+        if(mass1[0] == mass1[1] && mass1[1] == mass1[0]) { //Сравнивает элементы между парами
+            document.getElementById("reflection").innerHTML = "Рефлексивность";
+            mainflag = 1;
+        }
+    }
+    else {
+        for(let i = 0; i < mainMass.length - 1; i++){ // цикл по всей строке пар элементов
+            mass1 = mainMass[i].split(" "); // запись Попарно
+            flag = 0; //Обнуление флага при переходе к следующей паре элементов
+            for(let k = 0; k < rMass.length; k+=2){ //Проверка элементов из пар между массивами
+                if(mass1[0] == rMass[k]) 
+                {
+                    flag ++;
+                }
+                if(flag == mainMass.length) {
+                    document.getElementById("reflection").innerHTML = "Рефлексивность";
+                    mainflag = 1;
+                }
+            }   
+        }
     }
 }
 
@@ -89,13 +98,22 @@ function Symmetr(){ //функция на определение симметр�
 
     let mass1; //записывает первую пару элементов
     let mass2; //записывает вторую пару элементов
-    for(let i = 0; i < mainMass.length; i++){
-        mass1 = mainMass[i].split(" ");
-        for(let j = 1; j < mainMass.length; j++){
-             mass2 = mainMass[j].split(" ");
-            if(mass1[0] == mass2[1] && mass1[1] == mass2[0]) { //Сравнивает элементы между парами
-                document.getElementById("symmetric").innerHTML = "Симметричность";
-                mainflag = 1;
+    if(mainMass.length == 1) {
+        mass1 = mainMass[0].split(" ");
+        if(mass1[0] == mass1[1] && mass1[1] == mass1[0]) { //Сравнивает элементы между парами
+            document.getElementById("symmetric").innerHTML = "Симметричность";
+            mainflag = 1;
+        }
+    }
+    else {
+        for(let i = 0; i < mainMass.length - 1; i++){
+            mass1 = mainMass[i].split(" ");
+            for(let j = 1; j < mainMass.length; j++){
+                mass2 = mainMass[j].split(" ");
+                if(mass1[0] == mass2[1] && mass1[1] == mass2[0]) { //Сравнивает элементы между парами
+                    document.getElementById("symmetric").innerHTML = "Симметричность";
+                    mainflag = 1;
+                }
             }
         }
     }
@@ -106,36 +124,57 @@ function CosSymmetr(){ //функция на определение кососи
     let mass1; // хранит первую пару элементов
     let mass2; // хранит вторую пару элементов
     let flag;
-
-    for(let i = 0; i < mainMass.length; i++){
-        flag = 0;
-        mass1 = mainMass[i].split(" ");
-        for(let j = 1; j < mainMass.length; j++){
-            mass2 = mainMass[j].split(" ");
-            if(mass1[0] == mass2[1] && mass1[1] == mass2[0] && mass1[0] == mass1[1] && mass2[0] == mass2[1]) // Сравнивает нахождение и равность элементов между парами и в паре
-            {
-                document.getElementById("cosymmetric").innerHTML = "Кососимметричность";  
-                mainflag = 1;
-            }
-        }   
+    if (mainMass.length == 1) {
+        mass1 = mainMass[0].split(" ");
+        if(mass1[0] == mass1[1] && mass1[1] == mass1[0]) { //Сравнивает элементы между парами
+            document.getElementById("cosymmetric").innerHTML = "Кососимметричность";  
+            mainflag = 1;
+        }
+    }
+    else {
+        for(let i = 0; i < mainMass.length - 1; i++){
+            flag = 0;
+            mass1 = mainMass[i].split(" ");
+            for(let j = 1; j < mainMass.length; j++){
+                mass2 = mainMass[j].split(" ");
+                if(mass1[0] == mass2[1] && mass1[1] == mass2[0] && mass1[0] == mass1[1] && mass2[0] == mass2[1]) // Сравнивает нахождение и равность элементов между парами и в паре
+                {
+                    document.getElementById("cosymmetric").innerHTML = "Кососимметричность";  
+                    mainflag = 1;
+                }
+            }   
+        }
     }
 }
 
 function Transition(){ //функция на определение транзитивности
-    if (mainMass.length == 3) {
-    let mass1; //
- 
-    let flag;
-    flag = 0;
-    
-    mass1 = mainMass[0].split(" "); // получает 1 пару элементов
-    
-    if(mass1[1] == mass2[0] && mass1[0] == mass3[0] && mass2[1] == mass3[1]) //проверяет позиции элементов в парах и между парами
-        flag++;
-    if(flag>0)
-        {
-            document.getElementById("transition").innerHTML = "Транзитивность";
+    let mass1lvl;
+    let mass2lvl;
+    let mass3lvl;
+    let count;
+
+    for(let i = 0; i < mainMass.length; i++){
+        count = 0;
+        mass1lvl = mainMass[i].split(" ");
+        for(let j = 1; j < mainMass.length; j++ ){
+            mass2lvl = mainMass[j].split(" ");
+            for(let k = 2; k < mainMass.length; k++){
+                mass3lvl = mainMass[k].split(" ");
+            }
+        }
+        if(mass2lvl == undefined) {  
+            if(mass1lvl[0] == mass1lvl[1]) {
+                count++;
+            }
+        }
+        else {
+            if(mass1lvl[0] == mass1lvl[1] && mass2lvl[0] == mass2lvl[1]) {
+                count++;
+            }
+        }
+        if(count>0) {
             mainflag = 1;
+            document.getElementById("transition").innerHTML = "Транзитивность";
         }
     }
 }
