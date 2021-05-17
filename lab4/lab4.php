@@ -14,7 +14,7 @@
 				<br> 
                 <br>
 			<form method="post">
-				<textarea id="matr" class="matrica" name = 'matrica' value = '0'></textarea><br>
+				<textarea id="matr" class="matrica" name = 'matrica' value = '0'><?=$_POST['matrica']?></textarea><br>
 					Найти кратчайший путь из 
 					<input type = 'number' class="spin"  placeholder="1" name = 'start' min = '1' value = '<?= $_POST[start]?>'>
 					вершины в 
@@ -62,7 +62,6 @@
 					}
                     $mnode = -1; //хранит вершину с мин путём
 					$mway = INF; //минимальный путь 
-
 					for ($i = 0; $i < count($matrica); $i++)  {
 						$bool = true;
 						for ($j = 0; $j < count($node); $j++) {       
