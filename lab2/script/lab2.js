@@ -38,12 +38,18 @@ function Validation(){ //Функция валидации данных
     var validMass = firstlyMass.split(", ");
     let valid;  //
     let valid1; // Переменные для валидации данных
-    let valid2; //
+    
+    if(firstlyMass.length == 4) {
+        alert("Вы ввели только 1 элемент");
+    } else {
+        var valid2; 
+    }
     for(let i = 0; i < validMass.length; i++){ // основной цикл для перебора пар и валидации
         valid = validMass[i].split(' ');
         valid1 = valid[0].split('');
         valid2 = valid[1].split('');
         //Условия для проверки Ввода данных
+        
         if(valid1[0] % 2 == 0 && valid1[1] % 2 == 1 && number(valid1[2]) == true && number(valid1[3]) == true && valid2[0] % 2 == 0 && valid2[1] % 2 == 1 && number(valid2[2]) == true && number(valid2[3]) == true && valid1.length == 4 && valid2.length == 4 && i==validMass.length-1)
         {
             secondMass = secondMass + valid[0] + " " + valid[1]; //Если элемент последний
@@ -100,10 +106,8 @@ function Symmetr(){ //функция на определение симметр�
     let mass2; //записывает вторую пару элементов
     if(mainMass.length == 1) {
         mass1 = mainMass[0].split(" ");
-        if(mass1[0] == mass1[1] && mass1[1] == mass1[0]) { //Сравнивает элементы между парами
-            document.getElementById("symmetric").innerHTML = "Симметричность";
-            mainflag = 1;
-        }
+        document.getElementById("symmetric").innerHTML = "Симметричность";
+        mainflag = 1;
     }
     else {
         for(let i = 0; i < mainMass.length - 1; i++){
@@ -152,26 +156,29 @@ function Transition(){ //функция на определение транзи
     let mass2lvl;
     let mass3lvl;
     let count;
-
-    for(let i = 0; i < mainMass.length; i++){
         count = 0;
-        mass1lvl = mainMass[i].split(" ");
-        for(let j = 1; j < mainMass.length; j++ ){
-            mass2lvl = mainMass[j].split(" ");
-            for(let k = 2; k < mainMass.length; k++){
-                mass3lvl = mainMass[k].split(" ");
-            }
-        }
-        if(mass2lvl == undefined) {  
+        mass1lvl = mainMass[0].split(" ");
+        for(i = 0; i < mainMass.length; i++) {
+        if(mainMass.length == 1) {  
             if(mass1lvl[0] == mass1lvl[1]) {
                 count++;
             }
         }
         else {
-            if(mass1lvl[0] == mass1lvl[1] && mass2lvl[0] == mass2lvl[1]) {
-                count++;
+            if(mainMass.length == 2){
+                mass2lvl = mainMass[1].split(" ");
+                if( mass1lvl[0] == mass1lvl[1] && mass2lvl[1] == mass2lvl[0]) {
+                    count++;
+                }
+            }
+            else {
+                mass3lvl = mainMass[2].split(" ");
+                if( mass1lvl[0] == mass3lvl[0] && mass1lvl[1] == mass2lvl[0] && mass2lvl[1] == mass3lvl[1]) {
+                    count++;
+                }
             }
         }
+
         if(count>0) {
             mainflag = 1;
             document.getElementById("transition").innerHTML = "Транзитивность";
